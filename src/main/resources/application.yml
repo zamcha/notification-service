@@ -5,11 +5,25 @@ spring:
     username: guest
     password: guest
     virtual-host: "/"
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: caotran293@gmail.com
+    password: rygclrhxlmtpuoar   # nên dùng App Password của Gmail thay vì mật khẩu thật
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          connectiontimeout: 5000
+          timeout: 3000
+          writetimeout: 5000
   application:
     name: notification-service
   config:
     #    Imports configuration data from a config server when available
-    import: "optional:configserver:"
+    import: "configserver:http://localhost:6969"
     cloud:
       config:
         uri: ${CONFIG_SERVER_URL:http://localhost:6969}
@@ -38,11 +52,15 @@ spring:
 server:
   port: 8003
 queue:
-  notification:
-    queue: notification-queue
-    exchange: notification-exchange
-    routing-key: notification-routing-key
+#  notification:
+#    queue: notification-queue
+#    exchange: notification-exchange
+#    routing-key: notification-routing-key
   notification-mall:
     queue: notificationmall-queue
     exchange: notificationmall-exchange
     routing-key: notificationmall-routing-key
+  notification:
+    queue: notification-email1-queue       # Tên hàng đợi
+    exchange: notification-email1-exchange # Tên bưu điện
+    routing-key: notification-email1-key   # Mã định tuyến
